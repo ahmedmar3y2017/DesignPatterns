@@ -1,0 +1,7 @@
+The Prototype pattern should be used when you do not want a system to know details
+of how objects are created.
+
+
+
+Problems can occur with the Prototype pattern when fields are mutable .
+

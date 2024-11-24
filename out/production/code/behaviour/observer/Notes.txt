@@ -1,0 +1,8 @@
+When to use the Observer Design Pattern?
+Below is when to use observer design pattern:
+
+When you need one object to notify multiple others about changes.
+When you want to keep objects loosely connected, so they don’t rely on each other’s details.
+When you want observers to automatically respond to changes in the subject’s state.
+When you want to easily add or remove observers without changing the main subject.
+When you’re dealing with event systems that require various components to react without direct connections.

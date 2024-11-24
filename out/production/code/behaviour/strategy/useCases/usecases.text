@@ -1,0 +1,12 @@
+Common Use Cases:
+Algorithms: The behaviour.strategy pattern can be used to change algorithms or behaviors dynamically based on input or environmental conditions.
+Payment Processing: In e-commerce applications, the behaviour.strategy pattern can be used to change the payment processing method dynamically based on the user’s choice.
+Product Pricing: In retail applications, the behaviour.strategy pattern can be used to change the product pricing based on different sales promotions, discounts, and offers.
+Text Formatting: In word processing applications, the behaviour.strategy pattern can be used to change the text formatting style dynamically based on user inputs.
+Compression Algorithms: In file compression applications, the behaviour.strategy pattern can be used to change the compression algorithm dynamically based on the file size, type, and other parameters.
+Routing: In transportation and logistics applications, the behaviour.strategy pattern can be used to change the routing algorithm dynamically based on real-time traffic conditions and delivery schedules.
+
+
+
+----- reference
+https://medium.com/javarevisited/behaviour.strategy-design-pattern-a-smart-way-to-make-decisions-c8f8c37e3aec

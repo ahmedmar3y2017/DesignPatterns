@@ -1,0 +1,22 @@
+allows incompatible interfaces between classes
+to work together without modifying their source codeIt acts as a bridge between two interfaces,
+making them compatible so that they can collaborate and interact seamlessly
+it promotes code reusability by allowing objects to work together even if they were not designed to do so initially.
+
+
+Use -> object composition principle
+
+Advantages of the Adapter Design Pattern
+Single Responsibility Principle (SRP): The interface or data conversion code can be separated from the application’s primary business logic.
+Open/Closed Principle (OCP): New types of adapters can be introduced into the program without breaking the existing client code, as long as they work with the adapters through the Target interface.
+Compatibility and Integration: One of the main advantages of the Adapter pattern is that it enables the integration of existing classes or legacy systems with incompatible interfaces with the rest of the codebase. It allows these classes to interact with other components without requiring significant changes to their implementation.
+Code Reuse: Existing classes that have valuable functionality but are not directly compatible with the system’s desired interfaces can be reused by using adapters. This promotes code reuse and avoids duplication of code or functionalities.
+Flexibility and Maintainability: The Adapter pattern enhances the flexibility and maintainability of the code by decoupling the client code from the specific implementations of the Adaptees. New adapters can be introduced or existing ones modified without affecting the client code or Adaptee implementation.
+Unit Testing and Mocking: Adapters can be beneficial for unit testing and mocking. Mock implementations of interfaces that allow client code testing independent of the actual Adaptee‘s implementation can be created by introducing adapters.
+
+
+
+
+
+
+we need to implement adapter that get feeds from twitter , intstegram & facebook .

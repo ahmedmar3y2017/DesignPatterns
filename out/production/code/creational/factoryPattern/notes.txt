@@ -1,0 +1,28 @@
+Use Cases of the Factory Method Design Pattern
+Below are the use cases of factory method:
+
+JDBC uses factories to create connections and statements. Frameworks like Spring and Guice utilize factories for managing beans.
+Swing and JavaFX uses factories to produce UI components such as buttons and text fields, offering flexibility in design.
+Tools like Log4j and Logback employ factories to create loggers with various configurations, allowing for control over logging levels.
+Serialization frameworks use factories to generate objects from serialized data, accommodating different formats and versions.
+
+
+------------- Advantages of Factory Method Design Pattern
+Below are the main advantages of factory method:
+
+Separates object creation from client code, enhancing flexibility and maintainability since changes to creation don’t affect clients.
+New product types can be easily added without altering client code by simply creating new Concrete Creator subclasses.
+Simplifies unit testing by allowing mock product creation, enabling tests of various implementations without actual object dependencies.
+The factory method can be reused across different application parts, centralizing and streamlining object creation logic.
+Hides specific product classes from clients, reducing dependencies and improving maintainability.
+
+
+-------------- Disadvantages of Factory Method Design Pattern
+Below are the main advantages of factory method:
+
+Adds more classes and interfaces, which can complicate understanding and maintenance, especially for newcomers.
+Polymorphism and dynamic binding may slightly affect performance, though this is usually minimal.
+Concrete creators remain closely linked to their products, necessitating changes across both when one is modified.
+Client code must be aware of concrete subclasses to make accurate factory calls.
+The pattern should be applied carefully to avoid unnecessary complexity; simple object creation may not need a factory.
+Testing the factory logic can be more complicated compared to simpler designs.
