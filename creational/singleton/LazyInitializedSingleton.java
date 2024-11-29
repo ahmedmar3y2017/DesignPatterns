@@ -12,7 +12,7 @@ Lazy initialization method to implement the singleton pattern creates the instan
  * */
 
 public class LazyInitializedSingleton {
-
+    // volatile
     private static LazyInitializedSingleton instance;
 
     private LazyInitializedSingleton() {

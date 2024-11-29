@@ -1,0 +1,124 @@
+The Concept Of Multitasking
+To help users Operating System accommodates users the privilege of multitasking,
+where users can perform multiple actions simultaneously on the machine.
+ This Multitasking can be enabled in two ways:
+
+1 - Process-Based Multitasking
+2 - Thread-Based Multitasking
+
+
+1. Process-Based Multitasking (Multiprocessing)
+In this type of Multitasking, processes are heavyweight and each process was allocated by a separate
+ memory area. And as the process is heavyweight the cost of communication between processes
+ is high and it takes a long time for switching between processes as it involves
+ actions such as loading, saving in registers, updating maps, lists, etc.
+
+ 2. Thread-Based Multitasking
+ As we discussed above Threads are provided with lightweight nature and share
+ the same address space, and the cost of communication between threads is also low.
+
+-- Life Cycle Of Thread
+New State
+Active State
+Waiting/Blocked State
+Timed Waiting State
+Terminated State
+
+
+1. New State
+By default, a Thread will be in a new state,  in this state,
+code has not yet been run and the execution process is not yet initiated.
+
+2. Active State
+A Thread that is a new state by default gets transferred to Active state when it invokes the start() method, his Active state contains two sub-states namely:
+
+- Runnable State: In This State, The Thread is ready to run at any given time
+- Running State: When The Thread Receives CPU allocated by Thread Scheduler,
+it transfers from the “Runnable” state to the “Running”
+
+
+3. Waiting/Blocked State
+If a Thread is inactive but on a temporary time, then either it is a waiting or blocked state,
+for example, if there are two threads, T1 and T2 where T1 needs to communicate to the camera and
+the other thread T2 already using a camera to scan then T1 waits until T2 Thread completes its work,
+at this state T1 is parked in waiting for the state, and in another scenario,
+time slice given by Thread Scheduler then both Threads T1, T2 is in a blocked state.
+ When there are multiple threads parked in a Blocked/Waiting state Thread Scheduler clears Queue by
+ rejecting unwanted Threads and allocating CPU on a priority basis.
+
+4. Timed Waiting State
+there are two threads T1, T2 waiting for CPU and T1 is undergoing a Critical Coding operation
+and if it does not exist the CPU until its operation gets executed then T2 will be exposed to
+longer waiting with undetermined certainty
+
+5. Terminated State
+
+A thread will be in Terminated State, due to the below reasons:
+Termination is achieved by a Thread when it finishes its task Normally.
+Sometimes Threads may be terminated due to unusual events like segmentation faults,
+ exceptions…etc. and such kind of Termination can be called Abnormal Termination.
+A terminated Thread means it is dead and no longer available.
+
+-- What is Main Thread?
+enttry point for the code to get executed by JVM, Similarly in this Multithreading Concept,
+ Each Program has one Main Thread which was provided by default by JVM
+
+-- How to Create Threads using Java Programming Language?
+We can create Threads in java using two ways, namely :
+Extending Thread Class
+Implementing a Runnable interface
+
+
+------------ thread locks
+
+1 - Object Locks
+
+Object locks are used to synchronize access to an object’s methods and fields.
+ When a thread acquires a lock on an object, no other thread can execute any of the object’s
+ synchronized methods until the lock is released. To acquire a lock on an object,
+  a thread can use the synchronized keyword when declaring a method or use the synchronized block.
+
+class MyClass {
+    public synchronized void method1() {
+        // code here
+    }
+
+    public void method2() {
+        synchronized(this) {
+            // code here
+        }
+    }
+}
+
+2 - Class Locks
+Class locks are used to synchronize access to a class’s static methods and fields. When a thread acquires a lock on a class, no other thread can execute any of the class’s synchronized static methods until the lock is released. To acquire a lock on a class, a thread can use the synchronized keyword when declaring a static method or use the synchronized block.
+
+class MyClass {
+    public static synchronized void method1() {
+        // code here
+    }
+
+    public static void method2() {
+        synchronized(MyClass.class) {
+            // code here
+        }
+    }
+}
+
+Reentrant Locks
+more advanced form of locks that provide more flexibility and control over the locking mechanism
+A reentrant lock allows a thread to acquire a lock multiple times and release it multiple times,
+while a regular lock can only be acquired and released once.
+
+
+Read-Write Locks
+are used to control access to a shared resource.
+They allow multiple threads to read the shared resource simultaneously,
+but only one thread can write to it at a time.
+
+
+
+
+
+
+
