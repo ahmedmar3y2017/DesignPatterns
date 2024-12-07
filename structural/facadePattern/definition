@@ -1,0 +1,17 @@
+A facade is used to allow the user to perform complex processes with simple actions.
+
+
+When to use Facade Method Design Pattern
+A Facade provide a simple default view of the subsystem that is good enough for most clients.
+There are many dependencies between clients and the implementation classes of an abstraction.
+A Facade to decouple the subsystem from clients and other subsystems, thereby promoting subsystem independence
+ and portability.
+Facade define an entry point to each subsystem level. If subsystem are dependent, then you can simplify
+the dependencies between them by making them communicate with each other through their facades.
+
+
+
+example HERE
+
+
+https://refactoring.guru/design-patterns/facade/java/example
