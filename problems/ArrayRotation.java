@@ -8,6 +8,8 @@ public class ArrayRotation {
         int[] array = {1, 2, 3, 4, 5, 6, 7};
         rotate(array, 3);
         Arrays.stream(array).forEach(value -> System.out.println(value));
+//        7654321
+//                5671234
     // Expected Output: [5, 6, 7, 1, 2, 3, 4]
 
     }

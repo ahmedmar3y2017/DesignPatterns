@@ -1,6 +1,8 @@
 package creational.protoTypePattern.code;
 
-public class Person implements Cloneable {
+import java.io.Serializable;
+
+public class Person implements Cloneable , Serializable {
 
     String name;
 

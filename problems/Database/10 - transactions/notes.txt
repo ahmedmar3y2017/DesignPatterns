@@ -1,0 +1,5 @@
+
+
+-- explain DBMS transaction isolation level & spring handling for transaction isolation types
+
+https://www.baeldung.com/spring-transactional-propagation-isolation

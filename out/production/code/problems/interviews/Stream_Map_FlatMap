@@ -1,0 +1,52 @@
+1. What is flatMap()?
+1.1 Review the below structure. It consists of a 2 levels Stream or a 2d arrays.
+
+
+# Stream<String[]>
+# Stream<Stream<String>>
+# String[][]
+
+[
+  [1, 2],
+  [3, 4],
+  [5, 6]
+]
+
+In Java 8, we can use the flatMap to convert the above 2 levels Stream into one Stream level or a 2d array into a 1d array.
+
+
+# Stream<String>
+# String[]
+
+[1, 2, 3, 4, 5, 6]
+
+
+
+2. Why flat a Stream?
+2.1 It’s challenging to process a Stream containing more than one level,
+like Stream<String[]> or Stream<List<LineItem>> or Stream<Stream<String>>.
+And we flat the 2 levels Stream into one level, like Stream<String> or Stream<LineItem>,
+ so that we can easily loop the Stream and process it.
+
+
+2.2 Below is a 2d array, and we can use Arrays.stream or Stream.of to convert it into a Stream, and it produces a Stream of String[] or Stream<String[]>.
+
+
+  String[][] array = new String[][]{{"a", "b"}, {"c", "d"}, {"e", "f"}};
+
+  // array to a stream
+  Stream<String[]> stream1 = Arrays.stream(array);
+
+  // same result
+  Stream<String[]> stream2 = Stream.of(array);
+
+or like this.
+
+
+[
+  [a, b],
+  [c, d],
+  [e, f]
+]
+
+

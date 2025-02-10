@@ -1,0 +1,54 @@
+-- table has only 1 cluster index and any number of none cluster indexes
+because cluster index ensure pages order for table and if there is another cluster index the order will be fault
+
+-- there is a tool for each DBMS (oracle or postgres or .. etc) can check automatically the indexes you need and required for you
+
+-- primary key (usee generated and has a meaning ) is different from rowID (system generated )
+-- primary key by default DBMS create index for it
+--
+
+-- bitmap index designed for columns that have row cardenality .
+-- bitmap usd to encode values to bit map small size
+-- if cardinality increased -> bitmap index less efficient
+
+
+
+------------- query analyzer as a tree
+https://www.pgexplain.dev/
+-- copy & past analyzer output and tool will draw the plan as a tree
+
+-- we can get plan as a json format suacha s the following example
+explain (format json)
+SELECT *
+FROM "employees"
+WHERE "first_name" ILIKE '%a%'
+ORDER BY "birth_date" DESC
+LIMIT 50
+
+
+
+----------- joins types
+----------- nested join ---------
+-- nested loop join is the worest type of joins and its a default one
+-- if we have index on lef join column condition , it called index nested loop join
+-- nested loop join commonly used when join condition not equi join
+
+----------- merge join ---------
+-- first merge join ensure that order , sort first
+-- merge join used for equal opreations
+-- merge join faster than nested loop because of cost = Nt1 + Nt2 + merge
+-- when there is order by by any condition join key -> DBMS choose merge join for execute query to ensure odering
+
+
+------------- hash Join
+--
+--
+--
+
+
+-- implement materialize view & partitioning on postgres
+
+
+
+
+
