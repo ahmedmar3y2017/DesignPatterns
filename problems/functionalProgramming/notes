@@ -1,0 +1,513 @@
+Imperative vs declaritive
+
+| Paradigm        | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| **Imperative**  | *HOW* to do something, step-by-step. You control the flow.                 |
+| **Declarative** | *WHAT* you want to achieve. You describe the result, not how to get there. |
+
+
+Example Problem: Get Even Numbers from a List
+☑️ Imperative Style (Java)
+
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+List<Integer> evens = new ArrayList<>();
+
+for (Integer num : numbers) {
+    if (num % 2 == 0) {
+        evens.add(num);
+    }
+}
+System.out.println(evens); // [2, 4, 6]
+🔹 You explicitly tell the program how to filter the list: loop, check condition, add to result.
+
+☑️ Declarative Style (Java Streams)
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+List<Integer> evens = numbers.stream()
+                             .filter(num -> num % 2 == 0)
+                             .collect(Collectors.toList());
+
+System.out.println(evens); // [2, 4, 6]
+🔹 You declare what you want: "give me all even numbers from this list." The language handles how.
+
+
+SQL Example: Get employees with salary > 5000
+☑️ Imperative (Pseudocode / JDBC-style logic)
+Statement stmt = connection.createStatement();
+ResultSet rs = stmt.executeQuery("SELECT * FROM EMPLOYEES");
+
+List<Employee> result = new ArrayList<>();
+while (rs.next()) {
+    if (rs.getDouble("SALARY") > 5000) {
+        result.add(new Employee(rs.getString("NAME"), rs.getDouble("SALARY")));
+    }
+}
+🔹 You loop through rows and manually filter based on salary.
+
+☑️ Declarative (SQL)
+SELECT NAME, SALARY
+FROM EMPLOYEES
+WHERE SALARY > 5000;
+🔹 You tell the database what data you want, not how to loop through rows.
+
+| Feature      | Imperative                        | Declarative                        |
+| ------------ | --------------------------------- | ---------------------------------- |
+| Control flow | You define each step              | You define the end goal            |
+| Readability  | More verbose                      | More concise and expressive        |
+| Flexibility  | More control over how things work | Easier to write & maintain         |
+| Examples     | `for`, `if`, `while` in Java      | SQL, Streams, LINQ, React JSX, etc |
+
+
+ springboot example
+
+1. Imperative Style in Spring Boot
+You write how to query and filter the data — step by step.
+
+@Autowired
+private EntityManager entityManager;
+
+public List<User> findActiveAdminsImperative() {
+    String jpql = "SELECT u FROM User u";
+    List<User> allUsers = entityManager.createQuery(jpql, User.class).getResultList();
+
+    List<User> result = new ArrayList<>();
+    for (User user : allUsers) {
+        if (user.isActive() && "ADMIN".equals(user.getRole())) {
+            result.add(user);
+        }
+    }
+    return result;
+}
+🧠 You fetched everything and filtered in Java — very explicit, but inefficient and harder to maintain.
+
+2. Declarative Style in Spring Boot using Spring Data JPA
+You declare what you want — JPA takes care of the rest.
+
+✅ Using Repository Method:
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    List<User> findByActiveTrueAndRole(String role);
+}
+✅ Using It:
+@Autowired
+private UserRepository userRepository;
+
+public List<User> findActiveAdminsDeclarative() {
+    return userRepository.findByActiveTrueAndRole("ADMIN");
+}
+🧠 This is clean, declarative, and allows Spring Data JPA to auto-generate the query behind the scenes.
+
+
+--------------------------------- functional programming -----------------
+what is functional programming
+
+Functional programming (FP) is a programming paradigm —
+just like object-oriented or imperative — but it's based on
+pure functions, and declarative code.
+
+✅ 1. Pure Functions
+A pure function always returns the same output for the same input and does not modify any external state (no side effects).
+
+🔸 Example (Pure)
+public int square(int x) {
+    return x * x; // Always returns same result, no side effects
+}
+🔸 Example (Impure)
+int counter = 0;
+
+public int increment(int x) {
+    counter++; // modifies external state (side effect)
+    return x + 1;
+}
+
+✅ 2. Immutability
+You don't modify objects or variables — you create new ones instead.
+
+🔸 Example
+List<String> original = List.of("A", "B", "C");
+
+// Immutable transformation using Stream
+List<String> lowercased = original.stream()
+                                  .map(String::toLowerCase)
+                                  .collect(Collectors.toList());
+🔸 original stays unchanged — that's immutability.
+
+✅ 3. First-Class Functions
+Functions are treated like values: you can pass them as arguments,
+return them from other functions, or assign them to variables.
+
+🔸 Example
+Function<Integer, Integer> doubler = x -> x * 2;
+
+public void applyFunction(Function<Integer, Integer> func) {
+    System.out.println(func.apply(5)); // prints 10
+}
+
+
+✅ 4. Declarative Programming
+Focus on what you want, not how to do it (contrast to imperative).
+
+🔸 Imperative Example (manual loop):
+
+List<String> result = new ArrayList<>();
+for (String name : names) {
+    if (name.length() > 3) result.add(name.toUpperCase());
+}
+🔸 Declarative Example:
+List<String> result = names.stream()
+                           .filter(name -> name.length() > 3)
+                           .map(String::toUpperCase)
+                           .collect(Collectors.toList());
+
+
+✅ 5. Function Composition
+Combine smaller functions into bigger ones.
+
+🔸 Example
+Function<String, String> trim = String::trim;
+Function<String, String> toUpper = String::toUpperCase;
+
+// Compose: first trim, then uppercase
+Function<String, String> cleanAndUpper = trim.andThen(toUpper);
+
+System.out.println(cleanAndUpper.apply("  hello ")); // Output: HELLO
+
+✅ 6. Lazy Evaluation (Simulated)
+Computation is deferred until needed. Java Streams do this.
+
+🔸 Example
+Stream<String> stream = Stream.of("one", "two", "three")
+                              .filter(s -> {
+                                  System.out.println("Filtering: " + s);
+                                  return s.length() > 3;
+                              });
+
+// Nothing happens until terminal operation
+stream.forEach(System.out::println);
+
+
+| Style          | Focus           | Code Style                          | Example                      |
+| -------------- | --------------- | ----------------------------------- | ---------------------------- |
+| **Imperative** | Step-by-step    | Loops, mutable vars                 | `for` loops, `if` conditions |
+| **OOP**        | Objects & state | Classes, fields, methods            | `user.getName()`             |
+| **Functional** | Transformations | `map()`, `filter()`, pure functions | `stream().map().filter()`    |
+
+
+✅ Java Functional Programming (FP) Guide
+Java is not a pure functional language, but starting with Java 8, it introduced functional programming features like:
+
+1 - Lambda expressions - done
+2 - Functional interfaces - done
+3 - Streams API - done
+4 - Method references
+5 - Optional
+6 - Function composition
+
+----------------------------------- 2 - Functional interfaces ---------------------------------
+🔹 What Is a Functional Interface?
+A functional interface is an interface that contains exactly one abstract method
+(but can have any number of default or static methods).
+
+-- Declaring a Functional Interface
+You can use the @FunctionalInterface annotation
+
+@FunctionalInterface
+public interface Greeting {
+    void sayHello(String name);
+}
+Greeting greet = name -> System.out.println("Hello, " + name);
+greet.sayHello("Ali");
+
+
+-- common functional interfaces in java Util package
+| Interface           | Method Signature      | Example Use                    |
+| ------------------- | --------------------- | ------------------------------ |
+| `Function<T,R>`     | `R apply(T t)`        | Transform data                 | --
+| `Predicate<T>`      | `boolean test(T t)`   | Filtering                      | --
+| `Consumer<T>`       | `void accept(T t)`    | Processing (printing, logging) | --
+| `Supplier<T>`       | `T get()`             | Supplying values               | --
+| `BiFunction<T,U,R>` | `R apply(T t, U u)`   | Combine 2 inputs               | --
+
+-- some examples in practise {intellij}
+
+
+✅ When to Use Functional Interfaces
+Use them when:
+You want to pass behavior (like a method) as a parameter.
+You’re using Java Streams or Lambdas.
+You want to write cleaner, more concise functional-style code.
+
+
+----------------------------------- 1 - Lambda expressions ---------------------------------
+
+A lambda expression is a  way to represent an anonymous function —
+a block of code that can be passed around and executed later.
+
+(parameters) -> { expression or statements }
+
+🔸 Example 1: Runnable (no parameters)
+Runnable r = () -> System.out.println("Running a thread!");
+new Thread(r).start();
+
+Notes
+Lambda expressions can only be used with functional interfaces (interfaces with a single abstract method).
+
+If multiple lines are needed, wrap them in { } and use return.
+
+Function<Integer, Integer> square = x -> {
+    int result = x * x;
+    return result;
+};
+
+Notes
+Lambda expressions can only be used with functional interfaces (interfaces with a single abstract method).
+
+If multiple lines are needed, wrap them in { } and use return.
+
+Function<Integer, Integer> square = x -> {
+    int result = x * x;
+    return result;
+};
+
+----------------------------------- 3 - Streams API ---------------------------------
+🔹 What is the Stream API?
+Java Stream API (introduced in Java 8) lets you process collections (like List, Set, etc.)
+in a declarative, functional style using:
+
+Pipelines: Chain of operations
+Lazy evaluation: Doesn't execute until a terminal operation
+Immutability: Doesn’t modify the original collection
+
+Stream Pipeline =
+Source → Intermediate Operations → Terminal Operation
+
+List<String> names = List.of("Ali", "Ahmed", "Zara", "Badr");
+
+List<String> result = names.stream()                         // Source
+    .filter(name -> name.startsWith("A"))                    // Intermediate op
+    .map(String::toUpperCase)                                // Intermediate op
+    .sorted()                                                // Intermediate op
+    .collect(Collectors.toList());                           // Terminal op
+
+System.out.println(result); // Output: [AHMED, ALI]
+
+🧠 Streams Are Not Collections
+A Stream is a pipeline, not a container.
+It does not store data.
+It can only be used once.
+
+----------------------- here
+
+------------------------------- 5 - Optional -------------------
+
+✅ What is Optional?
+Optional<T> is a container object that may or may not contain a non-null value.
+
+- It was introduced in Java 8 to:
+Avoid NullPointerException
+Encourage explicit handling of missing values
+Promote functional programming
+
+🔹 Why use Optional?
+Instead of this:
+
+User user = userRepo.findByUsername("john");
+if (user != null) {
+   // do something
+}
+
+You do:
+
+Optional<User> user = userRepo.findByUsername("john");
+user.ifPresent(u -> {
+   // safely use u here
+});
+
+
+✅ Common Optional Methods (with Examples)
+1. Optional.of(value)
+Wraps a non-null value. Throws exception if value is null.
+Optional<String> name = Optional.of("Ali");
+
+2. Optional.ofNullable(value)
+Wraps a value that may be null.
+String input = null;
+Optional<String> maybeName = Optional.ofNullable(input);
+
+3. isPresent() and isEmpty()
+if (maybeName.isPresent()) {
+    System.out.println("Name is: " + maybeName.get());
+}
+
+4. ifPresent(Consumer)
+maybeName.ifPresent(name -> System.out.println("Hello, " + name));
+
+5. orElse(defaultValue)
+String name = maybeName.orElse("Guest");
+
+6. orElseGet(Supplier)
+String name = maybeName.orElseGet(() -> "GeneratedName");
+
+7. orElseThrow(Supplier<Exception>)
+String name = maybeName.orElseThrow(() -> new RuntimeException("Name missing"));
+
+8. map(Function)
+Optional<Integer> nameLength = maybeName.map(String::length);
+
+
+--- real examples
+
+    public User getUserOrThrow(String username) {
+        return userRepo.findByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    public String getEmailOrDefault(String username) {
+        return userRepo.findByUsername(username)
+            .map(User::getEmail)
+            .orElse("default@example.com");
+    }
+
+    public boolean isUserActive(String username) {
+        return userRepo.findByUsername(username)
+            .map(User::isActive)
+            .orElse(false);
+    }
+
+
+
+------------------------------ 4 - Method references --------------------
+
+In Java, method references are a shorthand notation for calling a method via a functional interface.
+They are cleaner alternatives to lambdas when the lambda just calls a method.
+
+✅ What Is a Method Reference?
+A method reference is a shorter way of writing a lambda that calls a method. It uses :: syntax.
+
+✅ 1. Types of Method References
+| Syntax                      | Type                            | Example               |
+| --------------------------- | ------------------------------- | --------------------- |
+| `ClassName::staticMethod`   | Static method                   | `Math::abs`           |
+| `object::instanceMethod`    | Instance method of an object    | `System.out::println` |
+| `ClassName::instanceMethod` | Instance method of a class type | `String::toLowerCase` |
+| `ClassName::new`            | Constructor reference           | `ArrayList::new`      |
+
+
+✅ 2. Examples for Each Type
+🔹 A. Static Method Reference – ClassName::staticMethod
+
+Function<Double, Double> absFunction = Math::abs;
+System.out.println(absFunction.apply(-5.0)); // Output: 5.0
+🔹 B. Instance Method Reference – object::instanceMethod
+
+List<String> names = List.of("John", "Jane");
+names.forEach(System.out::println);  // Same as: name -> System.out.println(name)
+🔹 C. Instance Method on Parameter – ClassName::instanceMethod
+
+List<String> names = List.of("Alice", "Bob", "Charlie");
+
+List<String> upper = names.stream()
+    .map(String::toUpperCase)   // same as: name -> name.toUpperCase()
+    .toList();
+
+System.out.println(upper); // [ALICE, BOB, CHARLIE]
+🔹 D. Constructor Reference – ClassName::new
+
+Supplier<List<String>> listSupplier = ArrayList::new;
+List<String> myList = listSupplier.get();
+Another example using Function:
+
+
+Function<String, User> userCreator = User::new;
+User user = userCreator.apply("Ali");
+
+✅ When to Prefer Method References?
+Use method references if:
+The lambda only calls a method
+The method name adds readability
+You want cleaner and shorter code
+
+---------------- ( stream 'vs' method preferences ) --------------
+List<String> names = List.of("a", "b", "c");
+
+List<String> upper = names.stream()
+    .map(String::toUpperCase)
+    .toList();
+
+------------------------------- 6 - Function composition ------------------------
+
+✅ What Is Function Composition?
+Function composition is combining multiple functions to run in sequence,
+where the output of one function becomes the input of the next.
+
+Java provides two main methods for composing functions:
+| Method      | Description                                       |
+| ----------- | ------------------------------------------------- |
+| `andThen()` | Apply this function, then the next one            |
+| `compose()` | Apply the input function **first**, then this one |
+
+
+
+
+----------------- Java Callback
+
+In Java, a callback is a way to pass a piece of logic
+(usually a function or method) to another method, so that it can be called later —
+often after some work is done or an event occurs.
+
+Example :
+    // callback like javascript , pass function to method as a paramater
+    public static void getStringDefault(String firstname, String lastname, Consumer<String> consumer) {
+        if (lastname != null) {
+            System.out.println(firstname + " -> " + lastname);
+        } else {
+            consumer.accept(firstname);
+        }
+    }
+
+
+
+
+
+--------------- Future in java  ---------
+--------------- completableFuture
+
+
+
+
+
+----------------
+🔸 What’s Next?
+✅ Stream Advanced Operations
+
+flatMap, groupingBy, partitioningBy, collectingAndThen, etc.
+
+Real examples like grouping by department, counting, etc.
+
+✅ Functional Programming in Spring Boot
+
+Use Streams, Optionals, lambdas in Service layers
+
+Functional response handling in REST APIs
+
+✅ Practical Use Cases
+
+Filtering database results using streams
+
+Mapping entities to DTOs with functional style
+
+Creating flexible pipelines for business logic
+
+✅ Dive into Optional
+
+Replace null checks
+
+Avoid NullPointerException
+
+Combine with streams and functional interfaces
+
+✅ Method References and Function Composition
+
+
+
+
+

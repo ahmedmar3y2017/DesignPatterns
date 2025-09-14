@@ -27,7 +27,27 @@ LIMIT 50
 
 
 
+----------- joins types
+----------- nested join ---------
+-- nested loop join is the worest type of joins and its a default one
+-- if we have index on lef join column condition , it called index nested loop join
+-- nested loop join commonly used when join condition not equi join
+
+----------- merge join ---------
+-- first merge join ensure that order , sort first
+-- merge join used for equal opreations
+-- merge join faster than nested loop because of cost = Nt1 + Nt2 + merge
+-- when there is order by by any condition join key -> DBMS choose merge join for execute query to ensure odering
+
+
+------------- hash Join
 --
+--
+--
+
+
+-- implement materialize view & partitioning on postgres
+
 
 
 
