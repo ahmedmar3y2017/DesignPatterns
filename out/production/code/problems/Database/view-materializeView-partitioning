@@ -1,0 +1,116 @@
+select count(*) from employees.salary;
+
+select * from employees.salary where ;
+
+
+
+
+-- select firstName , lastname , avg (salary) for eqch employees between 1-1-1900 , 1-1-2000
+
+explain analyse select e.id , e.first_name , e.last_name , sum(s.amount)  from employees.employee e
+inner join employees.salary s ON s.employee_id = e.id
+where
+s.from_date >= '1900-01-01'
+  AND s.from_date <  '2000-01-01'
+GROUP by e.id ;
+
+
+-- check specific employee
+select sum(s.amount) from employees.salary s where employee_id='10015'
+and s.from_date >= '1900-01-01'
+  AND s.from_date <  '2000-01-01';
+
+
+------------------------ Views ( NORMAL , MATERIALIZE VIEW ) --------------
+-- create normal view
+
+create view  employees.salaries_v as select e.id , e.first_name , e.last_name , sum(s.amount)  from employees.employee e
+inner join employees.salary s ON s.employee_id = e.id
+where
+s.from_date >= '1900-01-01'
+  AND s.from_date <  '2000-01-01'
+GROUP by e.id ;
+
+
+-- select from view
+explain analyse select * from employees.salaries_v ;
+
+-- create materialize view to check perfomance
+create MATERIALIZED VIEW  employees.salaries_mv as select e.id , e.first_name , e.last_name , sum(s.amount)  from employees.employee e
+inner join employees.salary s ON s.employee_id = e.id
+where
+s.from_date >= '1900-01-01'
+  AND s.from_date <  '2000-01-01'
+GROUP by e.id ;
+
+
+-- select from  materialize view
+explain analyse select * from employees.salaries_mv where id ='10015' ;
+
+-- create index on mv id
+
+CREATE INDEX IF NOT EXISTS salaries_mv_idIndex
+ON employees.salaries_mv using hash (id);
+
+-- insert into salaries for employee id = 10015
+
+-- select again from MV you will see old data and not updated ???
+
+-- refresh materialize view
+
+REFRESH salaries_mv_idIndex ;
+
+-- select again from MV you will see data updated
+
+
+----------------------- Partitioning -------------------
+
+select min(s.from_date) , max(s.from_date) from employees.salary s;
+
+-- from 1985 to 2002
+-- par1 : 1985 -> 1995
+-- par2 : 1995 -> 2005
+-- we need to create partioins of ranges between above dates
+
+create table employees.salary_Part
+(
+employee_id  bigint SERIAL,
+amount bigint ,
+from_date DATE NOT NULL,
+to_date DATE NOT NULL,
+PRIMARY KEY (employee_id, from_date),
+constraint fk_salary_employee
+     foreign key (employee_id)
+     REFERENCES employees.employee (id)
+
+)
+PARTITION BY RANGE (from_date);
+
+-- create partitions
+-- min 1985 - max 2002
+-- partitions = 3 : 1980 > 1990 , 1990 > 2000 , 2000 > 2010
+
+CREATE TABLE employees.salary_Part1 PARTITION OF employees.salary_Part
+    FOR VALUES FROM ('1980-01-01') TO ('1990-01-01');
+
+CREATE TABLE employees.salary_Part2 PARTITION OF employees.salary_Part
+    FOR VALUES FROM ('1990-01-01') TO ('2000-01-01');
+
+CREATE TABLE employees.salary_Part3 PARTITION OF employees.salary_Part
+    FOR VALUES FROM ('2000-01-01') TO ('2010-01-01');
+
+-- select from old table to new ( partitioned ) table
+INSERT INTO employees.salary_Part (employee_id, amount, from_date, to_date)
+SELECT employee_id, amount, from_date, to_date
+FROM employees.salary
+
+
+-- check partitions explain analysis
+-- partitions = 3 : 1980 > 1990 , 1990 > 2000 , 2000 > 2010
+
+explain analyse select * from employees.salary_part s where  s.from_date > '1980-01-01'
+  AND s.from_date <  '2000-01-01';
+
+
+
+
