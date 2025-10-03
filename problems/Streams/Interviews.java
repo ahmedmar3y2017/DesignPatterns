@@ -331,12 +331,227 @@ public class Interviews {
 //        System.out.println(collect);
 
         // 39 - Multiply array elements(Conceptual)
-        int[] a = {1, 2, 3, 4};
-        Arrays.stream(a)
-                .boxed().reduce( (x, y) -> x * y)
-                .ifPresent(System.out::println);
+//        int[] a = {1, 2, 3, 4};
+//        Arrays.stream(a)
+//                .boxed().reduce( (x, y) -> x * y)
+//                .ifPresent(System.out::println);
 
         // 40 - Can we reuse stream in Java 8 ?
+
+        // 41 - Convert a list of string to uppercase and then concatenate
+//        String[] arr = {"a", "b", "c", "d", "e", "f", "g", "h"};
+//        // 1
+//        System.out.println(Arrays.stream(arr)
+//                .collect(Collectors.mapping(s -> s.toUpperCase(), Collectors.joining(" "))));
+//        // 2
+//        Arrays.stream(arr).map(s -> s.toUpperCase()).reduce((a, b) -> a + " " + b)
+//                .ifPresent(System.out::println);
+
+        // 42 -Concatenate 2 streams
+//        String[] arr = {"a", "b", "c", "d", "e", "f", "g", "h"};
+//        String[] arr1 = {"a", "b", "c", "d", "e", "f", "g", "h"};
+//        Stream.concat(Arrays.stream(arr1), Arrays.stream(arr))
+//                .forEach(System.out::println);
+
+        // 45 - list to array
+//        List<String> list = List.of("a", "b", "c");
+//        String[] array = list.stream().toArray(String[]::new);
+//        for (int i = 0; i < array.length; i++) {
+//            System.out.println(array[i]);
+//        }
+
+        // 46 - find min , max by comparator
+//        int[] a = {1, 2, 3, 4};
+//        OptionalInt min = Arrays.stream(a).min();
+//        System.out.println(min);
+//        OptionalInt max = Arrays.stream(a).max();
+//        System.out.println(max);
+//        // comparator
+//        System.out.println(Arrays.stream(a).boxed().min(Integer::compareTo).get());
+//        System.out.println(Arrays.stream(a).boxed().max(Integer::compareTo).get());
+
+
+        // 47 - generate random 5 num
+//        Stream.generate(() -> Math.random()).limit(5).forEach(System.out::println);
+
+//        // 48 - generate 5 num iterate over a function
+//        Stream.iterate(0 ,integer -> integer + 1  )
+//                .limit(5)
+//                .forEach(System.out::println);
+
+        // 49 - create stream from list of values
+//        Stream<String> stringStream = Stream.of("1", "2", "3", "4", "5", "6", "7", "8", "9");
+//        stringStream.forEach(System.out::println);
+
+        // 50 - concatenate 2 streams
+//        Stream.concat(Stream.of(1), Stream.of(2)).forEach(System.out::println);
+
+        // 51 - reduce element to single values for example -> sum
+//        Stream.of(1 , 3 , 6 , 8)
+//                .reduce((integer, integer2) -> integer + integer2)
+//                .ifPresent(System.out::println);
+
+
+        // 52 - Print the middle character of a given String -- good
+//        String str = "ahmeed";
+//        int mid = str.length() / 2;
+//        String collect = Stream.iterate(0, integer -> integer + 1)
+//                .limit(str.length())
+//                .filter(integer -> {
+////                    if even
+//                    if (str.length() % 2 == 0) {
+//                        if (integer == mid - 1 || integer == mid) {
+//                            integer = mid;
+//                            return true;
+//                        }
+//                    } else {
+//                        if (integer == mid) {
+//                            integer = mid;
+//                            return true;
+//                        }
+//                    }
+//                    return false;
+//                })
+//                .map(integer -> str.charAt(integer))
+//                .map(String::valueOf)
+//                .collect(Collectors.joining(" ", "{ ", " }"));
+//        System.out.println(collect);
+
+        // 53 - Print distinct numbers which starts with "1" in descending order
+        // filter start with 1
+        // distinct
+        // order desc
+//        Stream<Integer> stringStream = Stream.of(11, 22, 33, 140, 55, 6, 78, 81, 19);
+//        List<Integer> collect1 = stringStream
+//                .filter(integer -> String.valueOf(integer).startsWith("1"))
+//                .distinct()
+//                .sorted(Comparator.reverseOrder())
+//                .collect(Collectors.toList());
+//        System.out.println(collect1);
+
+
+        // 54 - Return comparison of a Person object based on first name and then last name
+//        Employee employee1 = new Employee("ahmed", "mohamed@gmail.com");
+//        Employee employee2 = new Employee("ahmed", "ahmed@gmail.com");
+//        Employee employee3 = new Employee("islam", "islam@yahoo.com");
+//        Employee employee4 = new Employee("mahmoud", "mahmoud@yahoo.com");
+//        Employee employee5 = new Employee("mahmoud", "mahmoud@yahoo.com");
+//        List<Employee> employees = Arrays.asList(employee1, employee2, employee3, employee4, employee5);
+//
+//        employees.stream().sorted(Comparator.comparing(Employee::name)
+//                .thenComparing(Employee::email)
+//
+//        ).forEach(employee -> System.out.println(employee.toString()));
+
+        // 55 - Print the count of a particular substring : example string 'byeahmedbyemohamedbye' count bye : output : 3
+//        String str = "byeaxamedbyeamoxamedxaea";
+//        String search = "xa";
+//        System.out.println(Stream.iterate(0, i -> i + 1)
+//                .limit(str.length()-search.length()+1)
+//                .filter(integer -> str.substring(integer, integer + search.length()).equals(search))
+//                .collect(Collectors.counting()).intValue());
+
+        // 56 -  Find the department with maximum people
+//        Emp employee2 = new Emp("ahmed", "IT");
+//        Emp employee3 = new Emp("islam", "HR");
+//        Emp employee4 = new Emp("mahmoud", "IT");
+//        Emp employee5 = new Emp("mahmoud", "IT");
+//        Emp employee1 = new Emp("ahmed", "HR");
+//        List<Emp> employees = Arrays.asList(employee1, employee2, employee3, employee4, employee5);
+//        // 1
+//       employees.stream().collect(Collectors.groupingBy(emp -> emp.department,LinkedHashMap::new,
+//                Collectors.counting()))
+//                        .entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue , Comparator.reverseOrder()))
+//                .findFirst().ifPresent(System.out::println);
+//       // 2
+//        employees.stream().collect(Collectors.groupingBy(emp -> emp.department,
+//                Collectors.counting()))
+//                .entrySet().stream().max(Comparator.comparing(Map.Entry::getValue ))
+//                .ifPresent(System.out::println);
+
+
+        // 57 - Find the average salary from each department
+//        EmpSal employee2 = new EmpSal("ahmed", "IT" , 50 );
+//        EmpSal employee3 = new EmpSal("islam", "HR", 50 );
+//        EmpSal employee4 = new EmpSal("mahmoud", "IT", 100 );
+//        EmpSal employee5 = new EmpSal("mahmoud", "IT", 50 );
+//        EmpSal employee1 = new EmpSal("ahmed", "HR", 50 );
+//        List<EmpSal> employees = Arrays.asList(employee1, employee2, employee3, employee4, employee5);
+//        employees.stream().collect(Collectors.groupingBy(EmpSal::department , Collectors.averagingDouble(EmpSal::salary)))
+//                .forEach((s, aDouble) -> System.out.println(s + " " + aDouble));
+
+        // 58 - Reorder message from format in chronological order
+//        List<String> logs = List.of("14:30:20:ahmed ",
+//                "14:30:05:eslam",
+//                "14:30:02:soma",
+//                "14:30:00:lolo",
+//                "14:30:03:koko");
+//        // 1
+//        Map<String, String> collect = logs.stream().collect(Collectors.toMap(s -> s.substring(0, s.lastIndexOf(":")), s -> s.substring(s.lastIndexOf(":") + 1, s.length())));
+//        collect.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getKey))
+//                .forEach(e -> System.out.println(e.getValue()));
+//        // 2
+//        System.out.println("---------- ");
+//        logs.stream().sorted(Comparator.comparing(s -> ((String) s).split(":")[0])
+//                .thenComparing(s -> String.valueOf(s).split(":")[1])
+//                .thenComparing(s -> String.valueOf(s).split(":")[2])
+//        )
+//                .map(s -> s.split(":")[3])
+//                .forEach(e -> System.out.println(e));
+
+
+        // 58 - Return character with the maximum frequency
+//        String str = "abcdeeffffgdd";
+//        // 1
+//        Stream.of(str.split(""))
+//                .collect(Collectors.groupingBy(Function.identity() ,Collectors.counting()  ))
+//                .entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue , Comparator.reverseOrder())).
+//                findFirst().ifPresent(longEntry -> System.out.println(longEntry.getKey()));
+//        // 2
+//        Stream.of(str.split(""))
+//                .collect(Collectors.groupingBy(Function.identity() ,Collectors.counting()  ))
+//                .entrySet().stream().max(Comparator.comparing(Map.Entry::getValue ))
+//                .map(Map.Entry::getKey)
+//                .ifPresent(System.out::println);
+        // 59 - Convert list of string into map of String and its equivalent length
+//        List<String> strings = Arrays.asList("asdsf", "asdsf", "cff");
+//        strings.stream().collect(Collectors.toMap( s -> s, String::length , Integer::max))
+//                .entrySet().forEach(System.out::println);
+
+        // 60 - Transform one object into another . Transform Employee to EmployeeDTO
+//        EmpSal employee2 = new EmpSal("ahmed", "IT", 50);
+//        EmpSal employee3 = new EmpSal("islam", "HR", 50);
+//        EmpSal employee4 = new EmpSal("mahmoud", "IT", 100);
+//        EmpSal employee5 = new EmpSal("mahmoud", "IT", 50);
+//        EmpSal employee1 = new EmpSal("ahmed", "HR", 50);
+//        List<EmpSal> employees = Arrays.asList(employee1, employee2, employee3, employee4, employee5);
+//        employees.stream().map(empSal -> {
+//                            EmpSalDTO emp = new EmpSalDTO(empSal.name, empSal.department, empSal.salary);
+//                            return emp;
+//                        }
+//                )
+//                .forEach(empSalDTO -> System.out.println(empSalDTO));
+
+        // 61 - Comparable vs Comparator interface
+
+        // 1 - sort by salary
+        EmpSal employee2 = new EmpSal("ahmed", "IT", 200);
+        EmpSal employee3 = new EmpSal("islam", "HR", 3000);
+        EmpSal employee4 = new EmpSal("mahmoud", "IT", 100);
+        EmpSal employee5 = new EmpSal("mahmoud", "IT", 50);
+        EmpSal employee1 = new EmpSal("ahmed", "HR", 30);
+        List<EmpSal> employees = Arrays.asList(employee1, employee2, employee3, employee4, employee5);
+        employees.stream().sorted(EmpSal::compareTo)
+                .forEach(System.out::println);
+        // 2 -
+//        Comparator<EmpSal> empSalComparator = ((o1, o2) -> {
+//            return o1.salary > o2.salary ? 1 : -1;
+//        });
+//        Collections.sort(employees, empSalComparator);
+//        System.out.println(employees);
+        // 3 - using comparable
+//        Collections.sort(employees);
+//        System.out.println(employees);
 
 
         //  other examples
@@ -359,6 +574,30 @@ public class Interviews {
     }
 
     record Employee(String name, String email) {
+
+    }
+
+    record Emp(String name, String department) {
+
+    }
+
+    record EmpSal(String name, String department, double salary) implements Comparable<EmpSal> {
+        @Override
+        public String toString() {
+            return "EmpSal{" +
+                    "name='" + name + '\'' +
+                    ", department='" + department + '\'' +
+                    ", salary=" + salary +
+                    '}';
+        }
+
+        @Override
+        public int compareTo(EmpSal o) {
+            return this.salary > o.salary ? 1 : -1;
+        }
+    }
+
+    record EmpSalDTO(String name, String department, double salary) {
 
     }
 
