@@ -1,0 +1,24 @@
+✅ Final Answer:
+
+Spring AOP is an implementation that uses proxy objects to achieve the same goal as the Decorator Pattern —
+dynamically adding behavior around existing objects, without changing their code.
+
+
+
+Java I/O Streams (Classic Example)
+Logging and Monitoring in Services
+✅ Real-world usage: Spring Boot, Microservices, REST APIs
+Security and Authentication Layers
+HTTP Middleware / Servlet Filters
+Data Transformation Pipelines
+Caching and Performance Layers
+
+Spring Framework Itself
+✅ Real-world usage:
+AOP Proxies (as discussed earlier)
+
+BeanPostProcessors decorating beans at runtime
+
+@Transactional, @Cacheable, @Async — all built on proxy/decorator ideas
+
+
